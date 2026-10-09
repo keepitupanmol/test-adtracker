@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earn With Mani</title>
+
+<!-- =====================================================================
+     EDIT ONLY THIS BLOCK. Everything below it reads from here.
+     ===================================================================== -->
+<script>
+const CONFIG = {
+  // ---------- TRACKING (required) ----------
+  PIXEL_ID: '2616011045511860',                              // Meta Pixel / Dataset ID (same as pixel_id in the sheet)
+  CLIENT_ID: 'KamilBhai',                                    // same as client_id in the sheet, exact spelling
+  BACKEND_URL: 'https://api.digioffers.website/api/track',   // same for every client
+  FALLBACK_TELEGRAM_LINK: 'https://t.me/+ZhUfjv9c7ncyYWU1',  // used only if the backend is unreachable
+
+  // ---------- PAGE TEXT & LOOK ----------
+  PAGE_TITLE: 'Earn With Mani',                              // browser tab title
+  DISPLAY_NAME: 'Earn With Mani',                            // big name under the photo
+  BUTTON_TEXT: 'Join Free Telegram',
+  AVATAR_URL: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYMnQUbGp_6e8JSeSkC_3OysqJl6OUtJjYe_BomdQpr5K9sMpzX0JVsQXRsSm_s6hT7ksvxU_wExPiCrlqsWjZu4DmxvZpJrA29ar6NmxpKGjUzE1ft99UHNYC43qg6Xc4A8q-PVbCzgP0AKshNldDpQbqOVl0S9rhjKjGJrUgy2xLhKy3gRgKmlDRbVY/s1080/Picsart_26-10-07_23-10-29-035.png',
+  DISCLAIMER_TEXT: '',                                       // small grey text at the bottom, '' = hidden
+  ACCENT_COLOR: '#e6136b',                                   // photo ring + countdown color
+  BUTTON_GRADIENT: ['#e6136b', '#7b2ff7', '#1e3c8c'],        // button colors, left to right
+
+  // ---------- COUNTDOWN ----------
+  COUNTDOWN_REDIRECT: true,    // true = show countdown and open Telegram when it ends; false = hide it, visitor must tap
+  COUNTDOWN_SECONDS: 60,
+
+  // ---------- ADVANCED (rarely changed) ----------
+  FBP_WAIT_MS: 2000,           // max wait for the Pixel to set the _fbp cookie
+  REQUEST_TIMEOUT_MS: 8000,    // max wait for the backend
+  CLICK_WAIT_MS: 3000,         // max wait on click if tracking is still running
+  DEBUG: false                 // true = print what's happening in the browser console (F12)
+};
+</script>
+<!-- ===================== END OF EDIT BLOCK ===================== -->
+
+<!-- Meta Pixel Code (also sets the _fbp cookie) -->
+<script>
+if (CONFIG.PIXEL_ID) {
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', CONFIG.PIXEL_ID);
+  fbq('track', 'PageView');
+}
+</script>
+<!-- End Meta Pixel Code -->
+
+<style>
+  :root {
+    --accent: #e6136b;
+    --g1: #e6136b;
+    --g2: #7b2ff7;
+    --g3: #1e3c8c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f4f4;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 20px;
+  }
+  .card {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    padding: 32px 24px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+  }
+  .avatar {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 4px solid var(--accent);
+    object-fit: cover;
+    margin-bottom: 16px;
+  }
+  .name {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 8px 0 20px;
+    letter-spacing: 0.5px;
+  }
+  .join-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 40px;
+    background: linear-gradient(90deg, var(--g1) 0%, var(--g2) 50%, var(--g3) 100%);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .join-btn .icon { font-size: 18px; }
+  .timer {
+    margin-top: 22px;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+  .labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    padding: 0 4px;
+  }
+  .labels span {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    flex: 1;
+  }
+  .disclaimer {
+    margin-top: 22px;
+    font-size: 10px;
+    color: #888;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <img id="avatar" class="avatar" alt="Profile" hidden>
+    <div class="name" id="displayName"></div>
+
+    <a id="joinBtn" class="join-btn" href="#" rel="noopener">
+      <span class="icon">&#9992;&#65039;</span><span id="btnText"></span>
+    </a>
+
+    <div id="countdownBox" hidden>
+      <div class="timer" id="timer">00 : 00 : 00 : 00</div>
+      <div class="labels">
+        <span>DAYS</span>
+        <span>HOURS</span>
+        <span>MINUTES</span>
+        <span>SECONDS</span>
+      </div>
+    </div>
+
+    <div class="disclaimer" id="disclaimer" hidden></div>
+  </div>
+
+  <script>
+  (function () {
+    const C = CONFIG;
+    const log = function () { if (C.DEBUG) console.log.apply(console, ['[tracker]'].concat([].slice.call(arguments))); };
+
+    const btn = document.getElementById('joinBtn');
+    const timerEl = document.getElementById('timer');
+
+    // ---------------- Apply CONFIG to the page ----------------
+    document.title = C.PAGE_TITLE;
+    document.getElementById('displayName').textContent = C.DISPLAY_NAME;
+    document.getElementById('btnText').textContent = C.BUTTON_TEXT;
+    if (C.AVATAR_URL) {
+      const av = document.getElementById('avatar');
+      av.src = C.AVATAR_URL;
+      av.hidden = false;
+    }
+    if (C.DISCLAIMER_TEXT) {
+      const d = document.getElementById('disclaimer');
+      d.textContent = C.DISCLAIMER_TEXT;
+      d.hidden = false;
+    }
+    const root = document.documentElement.style;
+    root.setProperty('--accent', C.ACCENT_COLOR);
+    root.setProperty('--g1', C.BUTTON_GRADIENT[0]);
+    root.setProperty('--g2', C.BUTTON_GRADIENT[1]);
+    root.setProperty('--g3', C.BUTTON_GRADIENT[2]);
+    document.getElementById('countdownBox').hidden = !C.COUNTDOWN_REDIRECT;
+    btn.href = C.FALLBACK_TELEGRAM_LINK || '#';
+
+    // ---------------- Helpers ----------------
+    const sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+
+    function getCookie(name) {
+      const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+
+    // The Pixel sets _fbp shortly after it loads, so wait briefly for it
+    async function waitForFbp(maxMs) {
+      const start = Date.now();
+      while (Date.now() - start < maxMs) {
+        const v = getCookie('_fbp');
+        if (v) return v;
+        await sleep(100);
+      }
+      return getCookie('_fbp');
+    }
+
+    function safeStorage(action, key, value) {
+      try {
+        if (action === 'get') return sessionStorage.getItem(key);
+        sessionStorage.setItem(key, value);
+      } catch (e) { /* storage blocked: ignore */ }
+      return null;
+    }
+
+    // ---------------- Tracking ----------------
+    let trackDone = false;
+
+    async function trackVisit() {
+      try {
+        if (!C.CLIENT_ID || !C.BACKEND_URL) {
+          console.warn('CLIENT_ID or BACKEND_URL missing, skipping tracking.');
+          return;
+        }
+
+        // fbclid from the URL (remembered for this tab so a reload keeps it)
+        const urlFbclid = new URLSearchParams(window.location.search).get('fbclid');
+        if (urlFbclid) safeStorage('set', 'tg_fbclid', urlFbclid);
+        const fbclid = urlFbclid || safeStorage('get', 'tg_fbclid') || null;
+        log('fbclid:', fbclid);
+
+        // Reuse the invite link on reload so we don't create extra links
+        const cacheKey = 'tg_invite_' + C.CLIENT_ID + '_' + (fbclid || 'none');
+        const cached = safeStorage('get', cacheKey);
+        if (cached) {
+          btn.href = cached;
+          log('Using cached invite link:', cached);
+          return;
+        }
+
+        const fbp = C.PIXEL_ID ? await waitForFbp(C.FBP_WAIT_MS) : getCookie('_fbp');
+        log('fbp:', fbp);
+
+        const controller = new AbortController();
+        const timeout = setTimeout(function () { controller.abort(); }, C.REQUEST_TIMEOUT_MS);
+
+        const res = await fetch(C.BACKEND_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            client_id: C.CLIENT_ID,
+            fbclid: fbclid,
+            fbp: fbp,
+            event_source_url: window.location.href
+          }),
+          signal: controller.signal
+        });
+        clearTimeout(timeout);
+
+        const data = await res.json();
+        log('Backend response:', data);
+
+        if (data && data.ok && data.invite_link) {
+          btn.href = data.invite_link;
+          safeStorage('set', cacheKey, data.invite_link);
+        } else {
+          console.warn('Tracking failed, using fallback link:', data && data.error);
+        }
+      } catch (err) {
+        console.warn('Tracking error, using fallback link:', err.message);
+      } finally {
+        trackDone = true;
+      }
+    }
+
+    const trackPromise = trackVisit();
+
+    // ---------------- Redirect + countdown ----------------
+    let remaining = Math.max(0, Math.floor(Number(C.COUNTDOWN_SECONDS) || 60));
+    let redirected = false;
+    let interval = null;
+
+    // Goes to Telegram, waiting briefly for the tracked link if it isn't ready yet
+    async function goToTelegram() {
+      if (redirected) return;
+      redirected = true;
+      if (interval) clearInterval(interval);
+
+      if (!trackDone) {
+        await Promise.race([trackPromise, sleep(C.CLICK_WAIT_MS)]);
+      }
+
+      if (btn.getAttribute('href') === '#') {
+        console.warn('No Telegram link available. Set FALLBACK_TELEGRAM_LINK in CONFIG.');
+        redirected = false;
+        return;
+      }
+      log('Redirecting to:', btn.href);
+      window.location.href = btn.href;
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      goToTelegram();
+    });
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function renderTimer() {
+      const d = Math.floor(remaining / 86400);
+      const h = Math.floor((remaining % 86400) / 3600);
+      const m = Math.floor((remaining % 3600) / 60);
+      const s = remaining % 60;
+      timerEl.textContent = pad(d) + ' : ' + pad(h) + ' : ' + pad(m) + ' : ' + pad(s);
+    }
+
+    function tick() {
+      renderTimer();
+      if (remaining <= 0) {
+        goToTelegram();
+        return;
+      }
+      remaining--;
+    }
+
+    if (C.COUNTDOWN_REDIRECT) {
+      tick();
+      interval = setInterval(tick, 1000);
+    }
+  })();
+  </script>
+
+</body>
+</html>
